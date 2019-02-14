@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
+		version="2.0">
+		
+	<description>Spring Framework JSP Form Tag Plus Library</description>
+	<tlib-version>4.0</tlib-version>
+	<short-name>jfp</short-name>
+	<uri>http://www.springframework.org/tags/form-plus</uri>
+	
+	<!-- 数据绑定控件 -->
+	<!-- JPQL数据源控件 -->
+	<tag>
+		<name>SqlDataSource</name>
+		<tag-class>cn.jaly.utils.taglib.SqlDataSource</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<name>id</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>cmd</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute> 
+		<attribute>
+			<name>from</name>
+			<required>false</required> 
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>count</name> 
+			<required>false</required> 
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>order</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<name>SqlCommand</name>
+		<tag-class>cn.jaly.utils.taglib.SqlCommand</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<name>method</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>cmd</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<!-- Repeater数据绑定控件 -->
+	<tag>
+		<name>Repeater</name>
+		<tag-class>cn.jaly.utils.taglib.Repeater</tag-class>
+		<body-content>scriptless</body-content> 
+		<attribute>
+			<name>dataSourceID</name>
+			<required>true</required> 
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>var</name> 
+			<required>true</required> 
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>index</name> 
+			<required>false</required> 
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<!-- SingleItem数据绑定控件 -->
+	<tag>
+		<name>SingleItem</name>
+		<tag-class>cn.jaly.utils.taglib.SingleItem</tag-class>
+		<body-content>scriptless</body-content>
+		<attribute>
+			<name>dataSourceID</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>var</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<!-- SingleData数据绑定控件 -->
+	<tag>
+		<name>SingleData</name>
+		<tag-class>cn.jaly.utils.taglib.SingleData</tag-class>
+		<body-content>scriptless</body-content>
+		<attribute>
+			<name>dataSourceID</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>var</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<!-- Json数据源控件 -->
+	<tag>
+		<name>JsonDataSource</name>
+		<tag-class>cn.jaly.utils.taglib.JsonDataSource</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<name>id</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>value</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	
+	<!-- 防表单重复提交控件 -->
+	<tag>
+		<name>token</name>
+		<tag-class>cn.jaly.utils.taglib.TokenTag</tag-class>
+		<body-content>empty</body-content>
+	</tag>
+	
+</taglib>

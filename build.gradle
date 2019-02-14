@@ -1,0 +1,75 @@
+group 'cn.jaly'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: 'war'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+
+    // 添加本地jar包支持
+    compile fileTree(dir: 'lib', include: ['*.jar']);
+
+    // 添加spring / spring mvc支持
+    compile group: 'org.springframework', name: 'spring-webmvc', version: '4.3.7.RELEASE'
+    compile group: 'org.springframework', name: 'spring-jdbc', version: '4.3.7.RELEASE'
+    compile group: 'org.springframework', name: 'spring-aspects', version: '4.3.7.RELEASE'
+    compile group: 'org.springframework', name: 'spring-context-support', version: '4.3.7.RELEASE'
+
+    // 添加MyBatis支持
+    compile group: 'org.mybatis', name: 'mybatis', version: '3.4.2'
+    compile group: 'org.mybatis', name: 'mybatis-spring', version: '1.3.1'
+    compile group: 'org.mybatis.generator', name: 'mybatis-generator-core', version: '1.3.5'
+    compile group: 'com.github.pagehelper', name: 'pagehelper', version: '5.1.4'
+
+    // 数据源和数据库驱动
+    compile group: 'com.mchange', name: 'c3p0', version: '0.9.5.2'
+    runtime group: 'mysql', name: 'mysql-connector-java', version: '5.1.41'
+
+    // 账号安全shiro
+    compile group: 'org.apache.shiro', name: 'shiro-core', version: '1.3.2'
+    compile group: 'org.apache.shiro', name: 'shiro-web', version: '1.3.2'
+    compile group: 'org.apache.shiro', name: 'shiro-spring', version: '1.3.2'
+    compile group: 'org.apache.shiro', name: 'shiro-ehcache', version: '1.3.2'
+
+    // 文件上传和下载
+    compile group: 'commons-fileupload', name: 'commons-fileupload', version: '1.3.3'
+    compile group: 'commons-net', name: 'commons-net', version: '3.6'
+
+    // 二级缓存
+    compile group: 'net.sf.ehcache', name: 'ehcache-core', version: '2.6.11'
+    compile group: 'org.mybatis.caches', name: 'mybatis-ehcache', version: '1.1.0'
+
+    // 打印日志
+    compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.10.0'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.10.0'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-web', version: '2.10.0'
+
+    // 其他
+    compile group: 'jstl', name: 'jstl', version: '1.2'
+    providedCompile group: 'javax.servlet', name: 'javax.servlet-api', version: '3.0.1'
+    compile group: 'com.google.code.gson', name: 'gson', version: '2.7'
+    compile group: 'com.sun.mail', name: 'javax.mail', version: '1.6.2'
+    compile group: 'org.dom4j', name: 'dom4j', version: '2.1.0'
+    compile group: 'commons-httpclient', name: 'commons-httpclient', version: '3.1'
+
+    // 测试用包
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    testCompile group: 'org.springframework', name: 'spring-test', version: '4.3.7.RELEASE'
+}
+
+//指定编译的编码
+tasks.withType(JavaCompile){
+    options.encoding = "UTF-8"
+}
+
+war {
+    archiveName = "jcms.war"
+}

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- 配置securityManager -->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="cacheManager" ref="cacheManager"/>
+        <property name="authenticator" ref="authenticator"></property>
+        <property name="realms">
+            <list>
+                <ref bean="adminRealm"/>
+                <ref bean="memberRealm"/>
+            </list>
+        </property>
+    </bean>
+
+    <!-- 配置cacheManager：需要加入ehcache的jar包和配置文件 -->
+    <bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+        <property name="cacheManagerConfigFile" value="classpath:ehcache.xml"/>
+    </bean>
+
+    <!-- 配置使用自定义认证器，可以实现多Realm认证，并且可以指定特定Realm处理特定类型的验证 -->
+    <bean id="authenticator" class="cn.jaly.utils.shiro.CustomizedModularRealmAuthenticator">
+        <!-- 配置认证策略，只要有一个Realm认证成功即可，并且返回所有认证成功信息 -->
+        <property name="authenticationStrategy">
+            <bean class="org.apache.shiro.authc.pam.AtLeastOneSuccessfulStrategy"></bean>
+        </property>
+    </bean>
+
+    <!-- 配置Realm：自定义实现org.apache.shiro.realm.Realm接口的Bean -->
+    <bean id="adminRealm" class="cn.jaly.utils.shiro.AdminRealm">
+        <property name="credentialsMatcher">
+            <bean class="cn.jaly.utils.shiro.StockHashedCredentialsMatcher">
+                <property name="hashAlgorithmName" value="MD5"></property>
+                <property name="hashIterations" value="1024"></property>
+            </bean>
+        </property>
+    </bean>
+    <bean id="memberRealm" class="cn.jaly.utils.shiro.MemberRealm">
+        <property name="credentialsMatcher">
+            <bean class="cn.jaly.utils.shiro.StockHashedCredentialsMatcher">
+                <property name="hashAlgorithmName" value="SHA1"></property>
+                <property name="hashIterations" value="1024"></property>
+            </bean>
+        </property>
+    </bean>
+
+    <!-- 配置lifecycleBeanPostProcessor：
+    可以自动地调用配置在Spring IOC容器中的Shiro Bean的生命周期方法  -->
+    <bean id="lifecycleBeanPostProcessor"
+          class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+
+    <!-- 启用IOC容器中使用Shiro的注解，但必须在配置了lifecycleBeanPostProcessor之后才能使用  -->
+    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
+          depends-on="lifecycleBeanPostProcessor">
+        <property name="proxyTargetClass" value="true"/>
+    </bean>
+
+    <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+        <property name="securityManager" ref="securityManager"/>
+    </bean>
+
+    <bean id="adminLogout" class="org.apache.shiro.web.filter.authc.LogoutFilter">
+        <property name="redirectUrl" value="/login"></property>
+    </bean>
+
+    <bean id="adminRoles" class="cn.jaly.utils.shiro.RolesAuthorizationFilter">
+        <property name="loginUrl" value="/login"></property>
+        <property name="unauthorizedUrl" value="404"></property>
+    </bean>
+
+    <bean id="memberLogout" class="org.apache.shiro.web.filter.authc.LogoutFilter">
+        <property name="redirectUrl" value="/member_login.jsp"></property>
+    </bean>
+
+    <bean id="memberRoles" class="cn.jaly.utils.shiro.RolesAuthorizationFilter">
+        <property name="loginUrl" value="/member_login.jsp"></property>
+        <property name="unauthorizedUrl" value="404"></property>
+    </bean>
+
+    <!-- 配置shiroFilter -->
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <property name="securityManager" ref="securityManager"/>
+        <property name="filters">
+            <map>
+                <entry key="adminLogout" value-ref="adminLogout"/>
+                <entry key="adminRoles" value-ref="adminRoles"/>
+                <entry key="memberLogout" value-ref="memberLogout"/>
+                <entry key="memberRoles" value-ref="memberRoles"/>
+            </map>
+        </property>
+    </bean>
+
+    <!--授权控制服务：分为固定授权和动态授权两部分，检查顺序为先固定，后动态-->
+    <bean id="filterChainDefinitionsService" class="cn.jaly.utils.shiro.FilterChainDefinitionsService">
+        <property name="definitions">
+            <value>
+                <!--免权限-->
+                /admin/Admin/logout = adminLogout
+                /admin/Admin/showLogin = anon
+                /admin/Admin/unlckUI = anon
+                /admin/SiteContact/contact = anon
+                /login = anon
+                /content/Model/hit = anon
+                /content/Model/q_hit = anon
+
+                <!--管理员权限，也是最低级的管理员权限-->
+                /index = adminRoles["Admin"]
+                /admin/Admin/home = adminRoles["Admin"]
+                /admin/Admin/info = adminRoles["Admin"]
+                /admin/Admin/password = adminRoles["Admin"]
+                /admin/Admin/lckUI = adminRoles["Admin"]
+                /admin/AdminMenu/* = adminRoles["Admin"]
+
+                /content/Article/* = adminRoles["Admin"]
+                /content/Word/* = adminRoles["Admin"]
+                /content/Download/* = adminRoles["Admin"]
+                /content/Picture/* = adminRoles["Admin"]
+                /content/Video/* = adminRoles["Admin"]
+                /content/SinglePage/* = adminRoles["Admin"]
+
+                /upload = adminRoles["Admin"]
+            </value>
+        </property>
+    </bean>
+</beans>

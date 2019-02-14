@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+
+    <context id="DB2Tables" targetRuntime="MyBatis3">
+        <!--阻止自动生成注释-->
+        <commentGenerator>
+            <property name="suppressAllComments" value="true" />
+        </commentGenerator>
+        <!--数据库连接信息-->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/jcms?allowMultiQueries=true"
+                        userId="root"
+                        password="jalyshine-2018">
+        </jdbcConnection>
+
+        <javaTypeResolver >
+            <property name="forceBigDecimals" value="false" />
+        </javaTypeResolver>
+
+        <!--指定javaBean生成的位置-->
+        <javaModelGenerator targetPackage="cn.jaly.admin.entity" targetProject=".\src\main\java">
+            <property name="enableSubPackages" value="true" />
+            <property name="trimStrings" value="true" />
+        </javaModelGenerator>
+
+        <!--指定sql映射文件生成的位置-->
+        <sqlMapGenerator targetPackage="mapper" targetProject=".\src\main\resources">
+            <property name="enableSubPackages" value="true" />
+        </sqlMapGenerator>
+
+        <!--指定DAO接口（mapper接口）生成的位置-->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="cn.jaly.admin.dao" targetProject=".\src\main\java">
+            <property name="enableSubPackages" value="true" />
+        </javaClientGenerator>
+
+        <!--table指定每个表的生成策略-->
+        <!--<table tableName="admin" domainObjectName="Admin"></table>-->
+        <!--<table tableName="site" domainObjectName="Site"></table>-->
+        <!--<table tableName="site_hit" domainObjectName="SiteHit"></table>-->
+        <!--<table tableName="site_info" domainObjectName="SiteInfo"></table>-->
+        <!--<table tableName="site_contact" domainObjectName="SiteContact"></table>-->
+        <!--<table tableName="attach_setting" domainObjectName="AttachSetting"></table>-->
+        <!--<table tableName="logs" domainObjectName="Logs"></table>-->
+        <!--<table tableName="admin_role" domainObjectName="AdminRole"></table>-->
+        <!--<table tableName="admin_role_privacy" domainObjectName="AdminRolePrivacy"></table>-->
+        <!--<table tableName="admin_menu" domainObjectName="AdminMenu"></table>-->
+        <!--<table tableName="back_menu" domainObjectName="BackMenu"></table>-->
+        <table tableName="json_attribute" domainObjectName="JsonAttribute"></table>
+
+        <!--<table tableName="member" domainObjectName="Member"></table>-->
+        <!--<table tableName="member_detail" domainObjectName="MemberDetail"></table>-->
+        <!--<table tableName="member_verify" domainObjectName="MemberVerify"></table>-->
+        <!--<table tableName="member_favorite" domainObjectName="MemberFavorite"></table>-->
+        <!--<table tableName="member_group" domainObjectName="MemberGroup"></table>-->
+        <!--<table tableName="member_setting" domainObjectName="MemberSetting"></table>-->
+
+        <!--<table tableName="attachment" domainObjectName="Attachment"></table>-->
+        <!--<table tableName="attach_index" domainObjectName="AttachIndex"></table>-->
+        <!--<table tableName="member_setting" domainObjectName="MemberSetting"></table>-->
+
+        <!--<table tableName="comment" domainObjectName="Comment"></table>-->
+        <!--<table tableName="comment_data" domainObjectName="CommentData"></table>-->
+        <!--<table tableName="comment_setting" domainObjectName="CommentSetting"></table>-->
+        <!--<table tableName="single_page" domainObjectName="SinglePage"></table>-->
+        <!--<table tableName="model" domainObjectName="Model"></table>-->
+        <!--<table tableName="category" domainObjectName="Category"></table>-->
+        <!--<table tableName="word" domainObjectName="Word"></table>-->
+
+        <!--<table tableName="message" domainObjectName="Message"></table>-->
+        <!--<table tableName="message_group" domainObjectName="MessageGroup"></table>-->
+
+        <!--<table tableName="special" domainObjectName="Special"></table>-->
+
+        <!--<table tableName="tip" domainObjectName="Tip"></table>-->
+        <!--<table tableName="tip_type" domainObjectName="TipType"></table>-->
+
+        <!--<table tableName="template" domainObjectName="Template"></table>-->
+        <!--<table tableName="template_attribute" domainObjectName="TemplateAttribute"></table>-->
+        <!--<table tableName="template_file" domainObjectName="TemplateFile"></table>-->
+    </context>
+</generatorConfiguration>

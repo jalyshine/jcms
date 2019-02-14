@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        body, html, #mapall {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            margin: 0;
+            font-family: "微软雅黑";
+        }
+
+        * {
+            padding: 0;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+<div id="mapall">
+</div>
+<script src="http://static.1lwl.cn/theme_4047/js/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="http://static.1lwl.cn/theme_4047/js/8377c567786a4cd4a244fc5f73d6a5da.js"></script>
+<script type="text/javascript"
+        src="http://api.map.baidu.com/getscript?v=2.0&amp;ak=A739765f9a84bee561d30fa0b537ccb9&amp;services=&amp;t=20171031174121"></script>
+<script>
+    var pos = window.parent.document.getElementById("position").value.split(",");
+    var pos_h = parseFloat(pos[0]);
+    var pos_v = parseFloat(pos[1]);
+
+    $(function () {
+        drawbaidumap();
+        $(window).resize(function () {
+            drawbaidumap();
+        });
+    });
+
+    function drawbaidumap() {
+        var map = new BMap.Map("mapall");
+        var point = new BMap.Point(pos_h, pos_v);//定义一个中心点坐标
+        map.centerAndZoom(point, 16);
+        var mapStyle = {style: "dark"};
+        map.setMapStyle(mapStyle);
+        map.addControl(new BMap.NavigationControl());
+
+        var icon = new BMap.Icon("http://static.1lwl.cn/theme_4047/images/map-marker.png", new BMap.Size(50, 50), {'anchor': new BMap.Size(20, 60)});
+        var marker = new BMap.Marker(point, {icon: icon});
+        map.addOverlay(marker);
+        marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+    }
+</script>
+</body>
+</html>

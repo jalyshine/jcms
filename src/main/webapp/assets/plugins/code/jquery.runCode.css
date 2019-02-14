@@ -1,0 +1,28 @@
+.DlHighlight{display: block;color: #efefef; height: 100%;outline: none;font-size:13px; line-height: 1.2; }
+.DlHighlight .operand{color: #12E81D;}
+.DlHighlight .keyword{color: #6AC62E;}
+.DlHighlight .builtin{color: #FD8520;}
+.DlHighlight .string{color: #E6DB74;}
+.DlHighlight .string .before, .DlHighlight .string .after{color: #E6DB74;}
+.DlHighlight .regexp{color: #e76ef5;}
+.DlHighlight .regexp .before, .DlHighlight .regexp .after{color: #e76ef5;}
+.DlHighlight .comment{color: #c22;}
+.DlHighlight .comment .before, .DlHighlight .comment .after{color: #baa;}
+.DlHighlight .hashkey{color: #66D9D0;}
+.DlHighlight .hasharrow{color: #fff;}
+.DlHighlight .paren{color: #fff}
+.DlHighlight .operator{color: #fff;}
+.DlHighlight .error{background-color: #c00;color: #fff;}
+.DlHighlight .defun{color: #12E81D;}
+.DlHighlight .line-numbers{float: left;margin-left: -4.5em;width: 3em;text-align: right;color: #999;font: 0.9em tahoma,verdana,sans-serif;padding-top: 0.05em;}
+.DlHighlight .line-numbers:after{content: "."}
+.DlHighlight .xml-tag-close .before{color: #52a;}
+.DlHighlight .xml-entity{color: #b2a;}
+.DlHighlight .xml-entity .before, .DlHighlight .xml-entity .after{color: #fff;}
+.DlHighlight .css-class{color: #12E81D;}
+.DlHighlight .css-pseudo-class{color: #777;}
+.DlHighlight .css-id{color: #12E81D;}
+.DlHighlight .css-color-spec{color: #a51;}
+.DlHighlight .css-length, .DlHighlight .css-length .after{color: #a19;}
+.DlHighlight .css-declaration-kw{color: #12E81D;}
+.DlHighlight .css-comma{color: red;}

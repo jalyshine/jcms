@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+    <security>
+        <property name="allowOperLogger">false</property>
+        <property name="maxLoginTimes">5</property>
+        <property name="backDomain"></property>
+    </security>
+    <email>
+        <property name="server"></property>
+        <property name="sender"></property>
+        <property name="needAuth">false</property>
+        <property name="userName"></property>
+        <property name="password"></property>
+    </email>
+</Configuration>

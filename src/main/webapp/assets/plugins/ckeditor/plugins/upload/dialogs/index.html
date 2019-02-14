@@ -1,0 +1,194 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>上传资源</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../../../../../plugins/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+<div class="layui-tab layui-tab-brief">
+    <ul class="layui-tab-title">
+        <li class="layui-this">单图</li>
+        <li>多图</li>
+        <li>其他</li>
+    </ul>
+    <div class="layui-tab-content">
+        <div class="layui-tab-item layui-show">
+            <div class="upload-single-image">
+                <img id="singleImg" src="css/img/upload_bk.png">
+            </div>
+        </div>
+        <div class="layui-tab-item">
+            <div class="layui-upload">
+                <button class="layui-btn" id="browser1" type="button">选择文件</button>
+                <button class="layui-btn layui-btn-danger" id="start1" type="button"><i class="layui-icon"></i>开始上传
+                </button>
+                <form enctype="multipart/form-data">
+                    <ul id="imageList"></ul>
+                </form>
+            </div>
+        </div>
+        <div class="layui-tab-item">
+            <form class="layui-form" action="">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">文件类型</label>
+                    <div class="layui-input-block">
+                        <input title="视频" type="radio" value="0" name="fileType" lay-filter="type" checked>
+                        <input title="音频" type="radio" value="1" name="fileType" lay-filter="type">
+                        <input title="附件" type="radio" value="2" name="fileType" lay-filter="type">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">文件名称</label>
+                    <div class="layui-input-block">
+                        <input name="title" type="text" autocomplete="off" class="layui-input"/>
+                    </div>
+                </div>
+                <div class="layui-input-block layui-upload">
+                    <button class="layui-btn" id="browser2" type="button">选择文件</button>
+                    <button class="layui-btn layui-btn-danger" id="start2" type="button"><i class="layui-icon"></i>开始上传
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--收集上传文件信息-->
+<input type="hidden" id="content" value="">
+
+<script src="../../../../../plugins/layui/layui.js" charset="utf-8"></script>
+<script>
+    layui.use(['element', 'upload', 'form'], function () {
+        var $ = layui.jquery, upload = layui.upload, form = layui.form,
+            base = window.parent.adminUrl,
+            auth = {account: window.parent.account, password: window.parent.password};
+
+        // 单图上传
+        upload.render({
+            elem: '#singleImg'
+            , url: window.parent.imageUploadUrl
+            , data: auth
+            , before: function (obj) {
+                obj.preview(function (index, file, result) {
+                    $('#singleImg').attr('src', result); //图片链接（base64）
+                });
+            }, done: function (res) {
+                switch (res.code) {
+                    case -1:
+                        layer.msg('上传失败！没有站点权限！', {icon: 2});
+                        break;
+                    case 1:
+                        layer.msg('上传失败！' + res.msg, {icon: 2});
+                        break;
+                    case 0:
+                        if(res.siteId == undefined){
+                            var url = '${ base }upload/attach';
+                            var arg = {'data':JSON.stringify(res)};
+                            $.post(url, arg, null);
+                        }
+                        layer.msg('上传成功！', {icon: 1});
+                        var contents = $("#content").val() + "image*" + res.data.src + "|";
+                        $("#content").val(contents);
+                        break;
+                }
+            }, error: function () {
+                layer.alert("上传失败，请检查网络！");
+            }
+        });
+
+        //多图片上传
+        var uploadListIns = upload.render({
+            elem: '#browser1'
+            , url: window.parent.imageUploadUrl
+            , data: auth
+            , multiple: true
+            , auto: false
+            , bindAction: '#start1'
+            , choose: function (obj) {
+                var files = this.files = obj.pushFile();
+                obj.preview(function (index, file, result) {
+                    var fileItem = $(['<li id="upload-' + index + '" class="loading">'
+                        , '<span class="up-span"></span>'
+                        , '<span class="close-btn"></span>'
+                        , '<img class="up-img up-opcity" src="' + result + '" />'
+                        , '</li>'].join(''));
+                    fileItem.find('.close-btn').on('click', function () {
+                        delete files[index]; //删除对应的文件
+                        $(this).parent().remove();
+                        uploadListIns.config.elem.next()[0].value = '';
+                    });
+                    $('#imageList').append(fileItem);
+                    setTimeout(function () {
+                        fileItem.removeClass("loading");
+                        fileItem.find("img").removeClass("up-opcity");
+                    }, 400);
+                });
+            }, done: function (res, index, upload) {
+                if (res.code == 0) {
+                    if (res.siteId == undefined) {
+                        var url = base + 'upload/attach';
+                        var arg = {'data': JSON.stringify(res)};
+                        $.post(url, arg, null);
+                    }
+                    var contents = $("#content").val() + "image*" + res.data.src + "|";
+                    $("#content").val(contents);
+                    var li = $("#imageList").find("li#upload-" + index);
+                    li.find(".up-span").css("visibility", "hidden");
+                    return delete this.files[index];
+                }
+            }
+        });
+
+        var acceptArray = ['video', 'audio', 'file'];
+        var fileType = 0;
+
+        // 其他上传
+        var uploadIns = upload.render({
+            elem: '#browser2'
+            , url: window.parent.fileUploadUrl
+            , data: auth
+            , accept: acceptArray[fileType]
+            , auto: false
+            , bindAction: '#start2'
+            , choose: function (obj) {
+                obj.preview(function (index, file, result) {
+                    $(":text[name='title']").val(file.name);
+                });
+            }, done: function (res) {
+                switch (res.code) {
+                    case -1:
+                        layer.msg('上传失败！没有站点权限！', {icon: 2});
+                        break;
+                    case 1:
+                        layer.msg('上传失败！' + res.msg, {icon: 2});
+                        break;
+                    case 0:
+                        if (res.siteId == undefined) {
+                            var url = base + 'upload/attach';
+                            var arg = {'data': JSON.stringify(res)};
+                            $.post(url, arg, null);
+                        }
+                        layer.msg('上传成功！', {icon: 1});
+                        var title = $(":text[name='title']").val();
+                        var contents = $("#content").val() + acceptArray[fileType] + "*" + res.data.src + "*" + title + "|";
+                        $("#content").val(contents);
+                        break;
+                }
+            }, error: function () {
+                layer.alert("上传失败，请检查网络！");
+            }
+        });
+
+        form.on('radio(type)', function (data) {
+            fileType = parseInt(data.value);
+            uploadIns.config.accept = acceptArray[fileType];
+        });
+    });
+</script>
+</body>
+</html>
+

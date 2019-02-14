@@ -1,0 +1,117 @@
+@charset "utf-8";
+/*
+      www.SFont.cn 
+      You must credit the author Copy this link on your web 
+      <div>Font made from <a href="http://www.sfont.cn">icon</a>is licensed by CC BY 3.0</div>
+      OR
+      <a href="http://www.sfont.cn">icon</a>
+*/
+@font-face {
+  font-family: "sfont";
+  src:url("sfont.eot");
+  src:url("sfont.eot?#iefix") format("embedded-opentype"),
+    url("sfont.woff2") format("woff2"),
+    url("sfont.woff") format("woff"),
+    url("sfont.ttf") format("truetype"),
+    url("sfont.svg#sfont") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+[class^="i_"]:before, [class*=" i_"]:before{
+  font-family: "sfont";
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+}
+.i_circle_dot:before {
+  content: "\e010";
+}
+.i_website:before {
+  content: "\e011";
+}
+.i_diamond:before {
+  content: "\e012";
+}
+.i_zan:before {
+  content: "\e013";
+}
+.i_the_latest_prim:before {
+  content: "\e014";
+}
+.i_category:before {
+  content: "\e015";
+}
+.i_click:before {
+  content: "\e016";
+}
+.i_date:before {
+  content: "\e017";
+}
+.i_author:before {
+  content: "\e018";
+}
+.i_arrow:before {
+  content: "\e019";
+}
+.i_arrow_10:before {
+  content: "\e01a";
+}
+.i_arrow_11:before {
+  content: "\e01b";
+}
+.i_address:before {
+  content: "\e01c";
+}
+.i_five_pointed_st:before {
+  content: "\e01d";
+}
+.i_pentagram:before {
+  content: "\e01e";
+}
+.i_get_into:before {
+  content: "\e01f";
+}
+.i_ic_setting_zoom:before {
+  content: "\e020";
+}
+.i_firstpage:before {
+  content: "\e021";
+}
+.i_lastpage:before {
+  content: "\e022";
+}
+.i_direction:before {
+  content: "\e023";
+}
+.i_direction_20:before {
+  content: "\e024";
+}
+.i_direction_21:before {
+  content: "\e025";
+}
+.i_direction_22:before {
+  content: "\e026";
+}
+.i_contact_us:before {
+  content: "\e027";
+}
+.i_email:before {
+  content: "\e028";
+}
+.i_wechat:before {
+  content: "\e029";
+}
+.i_qq:before {
+  content: "\e02a";
+}
+.i_mobile:before {
+  content: "\e02b";
+}
+.i_tel:before {
+  content: "\e02c";
+}
+

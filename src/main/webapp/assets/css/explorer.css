@@ -1,0 +1,16 @@
+.layui-card { border: 1px solid #2F4056; }
+.layui-card-header { border: 0; background-color: #2F4056; }
+.header-table { width: 100%; height: 100%; }
+.header-table #path { width: 100%; height: 28px; border-radius: 2px; background-color: white; }
+.header-table #path li { height: 24px; margin: 2px; float: left; font-size: 10pt;
+    padding: 0 10px; background-color: #eee; line-height: 24px; text-align: center; }
+.header-table-icon { width: 50px; }
+.header-table-icon a { display: block; width: 35px; height: 35px; line-height: 35px;
+    text-align: center; border-radius: 50%; color: white; }
+.header-table-icon a:hover { background-color: white; color: #2F4056; }
+.header-table-icon i { font-size: 15pt; }
+
+.layui-card-body { padding: 0; }
+.layui-card-body table { margin: 0; padding: 0 }
+.layui-card-body table i { font-size: 12pt; color: black }
+.layui-card-body table tr{ cursor: default; -moz-user-select:none; -webkit-user-select: none; -ms-user-select: none; }
